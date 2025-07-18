@@ -17,9 +17,9 @@ export const Leaderboard: React.FC<LeaderboardProps> = ({ leaderboard }) => {
     const changedUsers = new Set<string>();
     
     leaderboard.forEach((current) => {
-      const previous = previousLeaderboard.find(p => p.id === current.id);
+      const previous = previousLeaderboard.find(p => p.userId === current.userId);
       if (!previous  || previous.rank !== current.rank) {
-        changedUsers.add(current.id);
+        changedUsers.add(current.userId);
       }
     });
 
@@ -92,7 +92,7 @@ export const Leaderboard: React.FC<LeaderboardProps> = ({ leaderboard }) => {
 
       <div className="space-y-3">
         {leaderboard.map((entry,ind) => {
-          const isAnimating = animatingUsers.has(entry.id);
+          const isAnimating = animatingUsers.has(entry.userId);
           return (
             <div
               key={ind}
@@ -106,7 +106,7 @@ export const Leaderboard: React.FC<LeaderboardProps> = ({ leaderboard }) => {
                       <h3 className="font-bold text-gray-900 dark:text-white text-lg">
                         {entry.name}
                       </h3>
-                      {getPointsChangeIndicator(entry.id)}
+                      {getPointsChangeIndicator(entry.userId)}
                     </div>
                     <p className="text-sm text-gray-500 dark:text-gray-400">
                       Rank #{entry.rank}

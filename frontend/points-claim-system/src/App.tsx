@@ -2,9 +2,7 @@ import  { useEffect, useMemo, useState } from 'react';
 import { Zap, BarChart3 } from 'lucide-react';
 import type{ User, PointHistory, LeaderboardEntry } from './types';
 import { useLocalStorage } from './hooks/useLocalStorage';
-import { useTheme } from './hooks/useTheme';
 import { initialUsers } from './data/initialUsers';
-import { ThemeToggle } from './components/ThemeToggle';
 import { UserSelector } from './components/UseSelector';
 import { AddUserForm } from './components/AddUser';
 import { ClaimButton } from './components/ClaimButton';
@@ -18,7 +16,6 @@ function App() {
   const [users, setUsers] = useLocalStorage<User[]>('users', initialUsers);
   const [history, setHistory] = useState<PointHistory[]>([]);
   const [selectedUserId, setSelectedUserId] = useState<string | null>(null);
-  const { theme, toggleTheme } = useTheme();
   const [leaderboardData, setLeaderboardData] = useState([]);
  const socket = useSocket();
   // Generate leaderboard with rankings
@@ -65,7 +62,6 @@ function App() {
   }
   const addUser =async (name: string, email: string) => {
     const userId = chooseUserIdRandomly();
-    console.log('userid:',userId)
    try {
     const addUsers = await axios.post("http://localhost:8000/add/user", {
       name,
@@ -87,30 +83,11 @@ function App() {
   }
   };
   const allTotalPoints = leaderboardData.reduce((sum, user) => sum + user?.totalPoints, 0);
-  const activeUsers = leaderboardData.filter(user => user?.totalPoints > 0).length;
+  const activeUsers = leaderboardData.filter(user => user.totalPoints > 0).length;
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 transition-colors duration-300">
       <div className="container mx-auto px-4 py-8 max-w-7xl">
-        {/* Header */}
-        <div className="flex items-center justify-between mb-8">
-          <div className="flex items-center space-x-4">
-            <div className="p-3 bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl shadow-lg">
-              <Zap className="h-8 w-8 text-white" />
-            </div>
-            <div>
-              <h1 className="text-4xl font-bold text-gray-900 dark:text-white">
-                Points System
-              </h1>
-              <p className="text-gray-600 dark:text-gray-400">
-                Real-time leaderboard with live updates
-              </p>
-            </div>
-          </div>
-          <ThemeToggle theme={theme} onToggle={toggleTheme} />
-        </div>
-
-        {/* Stats Bar */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-5 mb-8">
           <div className="bg-white dark:bg-gray-800 rounded-xl p-4 shadow-lg border border-gray-200 dark:border-gray-700">
             <div className="flex items-center space-x-3">

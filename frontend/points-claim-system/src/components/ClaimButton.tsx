@@ -15,28 +15,23 @@ export const ClaimButton: React.FC<ClaimButtonProps> = ({
   const [lastPoints, setLastPoints] = useState<number | null>(null);
   const [showAnimation, setShowAnimation] = useState(false);
   const socket = useSocket();
-
   // No longer needed since we're using callback pattern
   // useEffect removed
 
   const handleClaim = async () => {
     // Validation checks
     if (!selectedUserId) {
-      console.warn('No user selected');
       return;
     }
     
     if (isClaiming) {
-      console.warn('Already claiming');
       return;
     }
 
     if (!socket) {
-      console.error('Socket not available');
       return;
     }
 
-    console.log('Claiming points for user:', selectedUserId);
     setIsClaiming(true);
     
     try {
@@ -63,7 +58,6 @@ export const ClaimButton: React.FC<ClaimButtonProps> = ({
         setIsClaiming(false);
       });
       
-      console.log('Claim request sent via socket');
       
     } catch (error) {
       console.error('Error sending claim request:', error);
