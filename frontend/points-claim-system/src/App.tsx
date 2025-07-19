@@ -62,7 +62,7 @@ function App() {
   const addUser =async (name: string, email: string) => {
     const userId = chooseUserIdRandomly();
    try {
-    const addUsers = await axios.post("http://localhost:8000/add/user", {
+    const addUsers = await axios.post("https://point-claim-system.onrender.com/add/user", {
       name,
       email,
       userId,
