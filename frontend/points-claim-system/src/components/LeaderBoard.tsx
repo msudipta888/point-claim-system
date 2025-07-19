@@ -10,10 +10,9 @@ export const Leaderboard: React.FC<LeaderboardProps> = ({ leaderboard }) => {
   const [animatingUsers, setAnimatingUsers] = useState<Set<string>>(new Set());
   const [previousLeaderboard, setPreviousLeaderboard] = useState<LeaderboardEntry[]>([]);
 
-//socket connection to get real time data for board
+
 
   useEffect(() => {
-    // Check for changes in user positions or points
     const changedUsers = new Set<string>();
     
     leaderboard.forEach((current) => {

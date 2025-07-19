@@ -16,9 +16,9 @@ function App() {
   const [users, setUsers] = useLocalStorage<User[]>('users', initialUsers);
   const [history, setHistory] = useState<PointHistory[]>([]);
   const [selectedUserId, setSelectedUserId] = useState<string | null>(null);
-  const [leaderboardData, setLeaderboardData] = useState([]);
+  const [leaderboardData, setLeaderboardData] = useState<LeaderboardEntry[]>([]);
+  const [err,setErr] = useState("")
  const socket = useSocket();
-  // Generate leaderboard with rankings
   useEffect(() => {
     if (socket) {
         socket.on("calculate-rank", (data) => {
@@ -42,7 +42,6 @@ function App() {
     }
 }, [socket]);
 
-
  const leaderboard: LeaderboardEntry[] = useMemo(() => {
     return leaderboardData.map((user, index) => ({
       userId: user.userId,
@@ -55,7 +54,7 @@ function App() {
 
 
  
-  const userIds:string[] = ["111","123","343","122","555","233","788","1e4","787","s31","fg6"];
+  const userIds:string[] = ["111","123","343","122","555","233","788","1e4","787","s31","fg6","d4s","3sw","351","de4","4es","4r2s","4fe3ad"];
   const chooseUserIdRandomly = ()=>{
    const id = userIds[Math.floor(Math.random()*userIds.length)];
     return id;
@@ -77,8 +76,15 @@ function App() {
      if(addUsers.status===201){
       setUsers(currentUsers => [...currentUsers, newUser]);
      } 
-  } catch (error) {
+  } catch (error:unknown) {
     console.error("Error creating user:", error);
+    let message: string;
+  if (error instanceof Error) {
+    message = error.message;
+  } else {
+    message = String(error);
+  }
+  setErr(message);
     return null; 
   }
   };
@@ -124,7 +130,11 @@ function App() {
           </div>
          
         </div>
-
+        {err && (
+        <div className="mb-6 rounded bg-red-100 px-4 py-2 text-red-800 dark:bg-red-900 dark:text-red-200">
+          {err}
+        </div>
+      )}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {/* Left Column - User Management */}
           <div className="space-y-6">

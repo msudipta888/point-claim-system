@@ -34,7 +34,7 @@ const connetDb = async()=>{
 
 connetDb();
 
-// add user
+// add user route
 app.use("/add",addUserRoute);
 
 io.on("connection",(socket)=>{
@@ -43,7 +43,6 @@ io.on("connection",(socket)=>{
 
     // Handle claim-button event - moved out of calculate-ranking
     socket.on("claim-button", async(data, callback) => {
-        console.log('claim-button event received:', data);
         
         try {
             const { userId } = data;

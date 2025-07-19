@@ -35,5 +35,6 @@ export const assignPoint = async(userId)=>{
     return newPoint;
    } catch (error) {
     console.error('error:',error);
+    throw new Error(error)
    }
 }
