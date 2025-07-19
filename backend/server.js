@@ -14,11 +14,11 @@ app.use(express.json());
 
 const httpServer = createServer(app)
 app.use(cors({
-    origin:"https://point-claim-system.vercel.app/"
+    origin:"https://point-claim-system.vercel.app"
 }))
 const io = new Server(httpServer,{
     cors:{
-        origin: "https://point-claim-system.vercel.app/",
+        origin: "https://point-claim-system.vercel.app",
         credentials:true
     }
 })
