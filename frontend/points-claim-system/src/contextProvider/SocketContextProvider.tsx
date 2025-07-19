@@ -14,7 +14,7 @@ export const SocketProvider: React.FC<{ children: React.ReactNode }> = ({ childr
 
   useEffect(() => {
     console.log("🔌 Mounting SocketProvider");
-    const newSocket = io("http://localhost:8000");
+    const newSocket = io("https://point-claim-system.onrender.com");
     
     newSocket.on('connect', () => {
       setIsConnected(true);
