@@ -56,9 +56,10 @@ A full-stack real-time ranking and points assignment system using **MongoDB**, *
           npm install
           npm run dev
 
-API ENDPOINT: 
-   POST /add/user : To add new user
- Socket Connection Endpoint:
+## API ENDPOINT: 
+    POST /add/user : To add new user
+   
+## Socket Connection Endpoint:
     calculate-rank: show dynamic ledearboard
     history-point: for real time history collection show
     
